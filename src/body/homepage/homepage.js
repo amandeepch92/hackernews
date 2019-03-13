@@ -64,7 +64,7 @@ export default class Homepage extends React.Component{
                                         </div>
                                         <p>{item.points} points
                                             by {item.author} {parseInt(item.created_at_i / 86400000)} hour
-                                            ago | <a>hide</a>| {item.num_comments ? item.num_comments:0} comments</p>
+                                            ago | <a href={"#"}>hide</a>| {item.num_comments ? item.num_comments:0} comments</p>
                                     </div>)
                                 })
                                 }

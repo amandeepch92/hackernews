@@ -13,31 +13,31 @@ export default class Header extends React.Component{
                 <div id="id_header">
                     <ul>
                         <li style={{"fontWeight":"bold", "paddingRight":"4px"}}>
-                            <a>Hacker News</a>
+                            <a href={"#"}>Hacker News</a>
                         </li>
                          <li>
-                            <a>new | </a>
+                            <a href={"#"}>new | </a>
                         </li>
                          <li>
-                            <a>past | </a>
+                            <a href={"#"}>past | </a>
                         </li>
                          <li>
-                            <a>comments | </a>
+                            <a href={"#"}>comments | </a>
                         </li>
                          <li>
-                            <a>ask | </a>
+                            <a href={"#"}>ask | </a>
                         </li>
                          <li>
-                            <a>show | </a>
+                            <a href={"#"}>show | </a>
                         </li>
                          <li>
-                            <a>jobs | </a>
+                            <a href={"#"}>jobs | </a>
                         </li>
                          <li>
-                            <a>submit</a>
+                            <a href={"#"}>submit</a>
                         </li>
                          <li>
-                            <a>login</a>
+                            <a href={"#"}>login</a>
                         </li>
                     </ul>
                 </div>
