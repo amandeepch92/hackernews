@@ -2,6 +2,7 @@
   "name": "hackernews",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://github.com/amandeepch92/hackernews/",
   "dependencies": {
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
