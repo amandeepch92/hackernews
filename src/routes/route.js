@@ -6,10 +6,11 @@ import Comments from "../body/comments/comments";
 const routes = (
     <Router basename={"/"}>
         <Switch>
-            <Route path={"/"} render={(props)=>(<App/>)}/>
-            <Route path={"/"} render={(props)=>(<Comments/>)}/>
+            <Route exact path={"/"} render={(props)=>(<App/>)}/>
+            <Route exact path={"/comment"} render={(props)=>(<Comments/>)}/>
         </Switch>
     </Router>
 )
 
 
+export default routes;
