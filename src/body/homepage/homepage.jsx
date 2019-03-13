@@ -43,9 +43,9 @@ export default class Homepage extends React.Component{
             })
     }
 
-    checkCardNumbers(index){
-            let num = index-1;
-            return num*10;
+    upvote(e){
+        let previousValue  = window.$(e.target.previousSibling).text()
+        window.$(e.target.previousSibling).text(Number(previousValue) + 1)
     }
 
     hideStory(e){
@@ -65,6 +65,8 @@ export default class Homepage extends React.Component{
                                                 <span>
                                                     {itemindex +index+ 1}.
                                                 </span>
+                                                <span id="id_upvote">1</span>
+                                                <span onClick={this.upvote.bind(this)}>upvote</span>
                                                 <a href={item.url}>{item.title}</a>
                                             </span>
                                         </div>
