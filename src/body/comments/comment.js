@@ -1,16 +1,18 @@
 import React from "react";
+import "./comment.css";
 
 
 export default function Comment(props){
         const item = props.data
         return(
             <React.Fragment>
-                <div style={{"backgroundColor":"yellow"}}>
-                    <p>{item.author} {parseInt(item.created_at_i / 86400000)} hour
-                        ago [-]
+                <div>
+                    <p>[-] {item.author} 
+                    <span className="hour">{parseInt(item.created_at_i / 86400000)} hour ago</span>
                     </p>
-                    <p>reply</p>
-                    <div dangerouslySetInnerHTML={ { __html: item.text } }></div>
+
+                    <div className="comment-description" dangerouslySetInnerHTML={ { __html: item.text } }></div>
+                    <p className="reply"><a href="#">reply</a></p>
                 </div>
             </React.Fragment>
         )

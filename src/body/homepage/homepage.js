@@ -53,14 +53,16 @@ export default class Homepage extends React.Component{
         return(
             this.state.isLoaded ?
                     <React.Fragment>
-                        <div>
+                        <div className="main-body">
                                 {this.state.alldata.hits.map((item, index) => {
                                     return (<div key={"news_list_" + index}>
                                         <div>
-                                            {itemindex +index+ 1} .
-                                            <span>
-                                    <a href={item.url}>{item.title}</a>
-                                </span>
+                                            <span className="text">
+                                                <span>
+                                                    {itemindex +index+ 1}.
+                                                </span>
+                                                <a href={item.url}>{item.title}</a>
+                                            </span>
                                         </div>
                                         <p>{item.points} points
                                             by {item.author} {parseInt(item.created_at_i / 86400000)} hour
@@ -69,7 +71,7 @@ export default class Homepage extends React.Component{
                                 })
                                 }
 
-                                <div onClick={this.pagination.bind(this)}>More</div>
+                                <div className="more" onClick={this.pagination.bind(this)}>More</div>
 
                         </div>
                     </React.Fragment>

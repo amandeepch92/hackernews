@@ -1,4 +1,6 @@
 import React from "react";
+import {NavLink} from 'react-router-dom';
+
 import "./header.css"
 export default class Header extends React.Component{
 
@@ -12,32 +14,17 @@ export default class Header extends React.Component{
             <React.Fragment>
                 <div id="id_header">
                     <ul>
-                        <li style={{"fontWeight":"bold", "paddingRight":"4px"}}>
-                            <a href={"#"}>Hacker News</a>
+                        <li className="logo">
+                            <NavLink to="/">
+                                <img src="https://news.ycombinator.com/y18.gif"/>
+                            </NavLink>
+                        </li>
+                        
+                         <li className="right-broder active">
+                            <NavLink to={"/"}>new</NavLink>
                         </li>
                          <li>
-                            <a href={"#"}>new | </a>
-                        </li>
-                         <li>
-                            <a href={"#"}>past | </a>
-                        </li>
-                         <li>
-                            <a href={"#"}>comments | </a>
-                        </li>
-                         <li>
-                            <a href={"#"}>ask | </a>
-                        </li>
-                         <li>
-                            <a href={"#"}>show | </a>
-                        </li>
-                         <li>
-                            <a href={"#"}>jobs | </a>
-                        </li>
-                         <li>
-                            <a href={"#"}>submit</a>
-                        </li>
-                         <li>
-                            <a href={"#"}>login</a>
+                            <NavLink to={"/comment"}>comments</NavLink>
                         </li>
                     </ul>
                 </div>

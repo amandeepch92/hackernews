@@ -12,12 +12,11 @@ export default class Comments extends React.Component{
         }
     }
     componentDidMount() {
-
+        var that = this;
         fetch("http://hn.algolia.com/api/v1/items/19356029")
             .then((res)=>res.json())
             .then((res)=>{
-                console.log(res);
-                this.setState({
+                that.setState({
                     data:res,
                     isLoaded:true
                 })
@@ -50,12 +49,19 @@ export default class Comments extends React.Component{
                                 ago | <a href={"#"}>hide</a>| past | web | favourite | {$data.children.length ? $data.children.length:0} comments
                             </p>
                             <form>
-                                <textarea rows={"10"} cols={"50"}></textarea>
-                                <input type={"button"} value={"Add Comment"}/>
+                                <ul>
+                                    <li>
+                                        <textarea rows={"5"} cols={"50"}></textarea>
+                                    </li>
+
+                                    <li>
+                                        <input className="btn-primary" type={"button"} value={"Add Comment"}/>
+                                    </li>
+                                </ul>
                             </form>
                         </div>
 
-                        <div className={"body"}>
+                        <div className={"comments-body"}>
                             {$data.children.map((item)=>{
                                 return this.comment(item);
                             })}
