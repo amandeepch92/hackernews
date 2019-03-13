@@ -26,17 +26,16 @@ export default class Homepage extends React.Component{
 
     pagination(){
         let that = this;
-
-        let pageItemIndex = that.checkCardNumbers(that.state.pageIndex+1)
-        fetch("http://hn.algolia.com/api/v1/search?page="+that.state.pageIndex+1)
+        let currentPageNumber = that.state.pageIndex+1;
+        //let pageItemIndex = that.checkCardNumbers(currentPageNumber)
+        fetch("http://hn.algolia.com/api/v1/search?page="+currentPageNumber)
             .then((res) => res.json())
             .then((res) => {
-                console.log(res);
                 if(res) {
                     that.setState({
                         alldata: res,
                         isLoaded: true,
-                        pageIndex: that.state.pageIndex + 1,
+                        pageIndex: currentPageNumber,
                         showingPageNumber: res.page
                     })
                 }
@@ -49,7 +48,7 @@ export default class Homepage extends React.Component{
     }
 
     render(){
-        let itemindex = this.state.showingPageNumber==0?this.state.showingPageNumber:this.state.showingPageNumber+10;
+        let itemindex = this.state.showingPageNumber === 0 ? this.state.showingPageNumber:this.state.showingPageNumber+10;
         return(
             this.state.isLoaded ?
                     <React.Fragment>
@@ -66,7 +65,7 @@ export default class Homepage extends React.Component{
                                         </div>
                                         <p>{item.points} points
                                             by {item.author} {parseInt(item.created_at_i / 86400000)} hour
-                                            ago | <a href={"#"}>hide</a>| {item.num_comments ? item.num_comments:0} comments</p>
+                                            ago | <span>hide</span>| {item.num_comments ? item.num_comments:0} comments</p>
                                     </div>)
                                 })
                                 }

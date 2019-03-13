@@ -14,8 +14,8 @@ export default class Comments extends React.Component{
     componentDidMount() {
         var that = this;
         fetch("http://hn.algolia.com/api/v1/items/19356029")
-            .then((res)=>res.json())
-            .then((res)=>{
+            .then((res) => res.json())
+            .then((res) => {
                 that.setState({
                     data:res,
                     isLoaded:true
@@ -46,7 +46,7 @@ export default class Comments extends React.Component{
                             <a href={$data.url}>{$data.title}</a>
                             <p>{$data.points} points
                                 by {$data.author} {parseInt($data.created_at_i / 86400000)} hour
-                                ago | <a href={"#"}>hide</a>| past | web | favourite | {$data.children.length ? $data.children.length:0} comments
+                                ago | <span>hide</span>| past | web | favourite | {$data.children.length ? $data.children.length:0} comments
                             </p>
                             <form>
                                 <ul>
@@ -62,10 +62,10 @@ export default class Comments extends React.Component{
                         </div>
 
                         <div className={"comments-body"}>
-                            {$data.children.map((item)=>{
+                            {$data.children.map((item) => {
                                 return this.comment(item);
                             })}
-                            <a></a>
+                            
 
                         </div>
 

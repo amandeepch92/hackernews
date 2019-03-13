@@ -4,10 +4,7 @@ import {NavLink} from 'react-router-dom';
 import "./header.css"
 export default class Header extends React.Component{
 
-    constructor(props){
-        super(props)
-    }
-
+    
 
     render(){
         return(
@@ -16,7 +13,7 @@ export default class Header extends React.Component{
                     <ul>
                         <li className="logo">
                             <NavLink to="/">
-                                <img src="https://news.ycombinator.com/y18.gif"/>
+                                <img alt="logo" src="https://news.ycombinator.com/y18.gif"/>
                             </NavLink>
                         </li>
                         

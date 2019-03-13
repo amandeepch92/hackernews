@@ -12,7 +12,7 @@ export default function Comment(props){
                     </p>
 
                     <div className="comment-description" dangerouslySetInnerHTML={ { __html: item.text } }></div>
-                    <p className="reply"><a href="#">reply</a></p>
+                    <p className="reply"><span>reply</span></p>
                 </div>
             </React.Fragment>
         )
