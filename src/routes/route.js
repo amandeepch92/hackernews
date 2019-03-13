@@ -7,7 +7,8 @@ const routes = (
     <Router basename={"/"}>
         <Switch>
             <Route exact path={"/"} render={(props)=>(<App/>)}/>
-            <Route exact path={"/comment"} render={(props)=>(<Comments/>)}/>
+            <Route exact path={"/:id"} render={(props)=>(<Comments {...props}/>)}/>
+            <Route exact path={"/comment"} render={(props)=>(<Comments {...props}/>)}/>
         </Switch>
     </Router>
 )

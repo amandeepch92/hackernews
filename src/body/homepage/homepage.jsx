@@ -1,4 +1,5 @@
 import React from "react";
+import {NavLink} from "react-router-dom";
 
 export default class Homepage extends React.Component{
     constructor(props){
@@ -47,6 +48,10 @@ export default class Homepage extends React.Component{
             return num*10;
     }
 
+    hideStory(e){
+        window.$(e.target).closest("#id_news").hide()
+    }
+
     render(){
         let itemindex = this.state.showingPageNumber === 0 ? this.state.showingPageNumber:this.state.showingPageNumber+10;
         return(
@@ -54,7 +59,7 @@ export default class Homepage extends React.Component{
                     <React.Fragment>
                         <div className="main-body">
                                 {this.state.alldata.hits.map((item, index) => {
-                                    return (<div key={"news_list_" + index}>
+                                    return (<div key={"news_list_" + index} id={"id_news"}>
                                         <div>
                                             <span className="text">
                                                 <span>
@@ -65,7 +70,7 @@ export default class Homepage extends React.Component{
                                         </div>
                                         <p>{item.points} points
                                             by {item.author} {parseInt(item.created_at_i / 86400000)} hour
-                                            ago | <span>hide</span>| {item.num_comments ? item.num_comments:0} comments</p>
+                                            ago | <span onClick={this.hideStory.bind(this)}>hide</span>| <NavLink to={"/"+item.objectID}>{item.num_comments ? item.num_comments:0} comments</NavLink></p>
                                     </div>)
                                 })
                                 }

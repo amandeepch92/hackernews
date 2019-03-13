@@ -1,4 +1,5 @@
 import React from "react";
+import {NavLink} from "react-router-dom";
 import Comment from "./comment";
 import Header from "../../header/header";
 
@@ -13,29 +14,20 @@ export default class Comments extends React.Component{
     }
     componentDidMount() {
         var that = this;
-        fetch("http://hn.algolia.com/api/v1/items/19356029")
-            .then((res) => res.json())
-            .then((res) => {
-                that.setState({
-                    data:res,
-                    isLoaded:true
+        let paramid = this.props.match.params.id;
+        let url = paramid ? "http://hn.algolia.com/api/v1/items/"+paramid:"";
+        if(paramid) {
+
+            fetch("http://hn.algolia.com/api/v1/items/"+paramid)
+                .then((res) => res.json())
+                .then((res) => {
+                    that.setState({
+                        data: res,
+                        isLoaded: true
+                    })
                 })
-            })
-    }
-
-    comment(item){
-        if(item.children.length){
-            console.log(item.children[0])
-            this.comment(item.children[0])
-           return <Comment data={item}>
-                {this.props.children}
-            </Comment>
-
-        }else{
-            return <Comment data={item}/>
         }
     }
-
     render(){
         const $data = this.state.data;
         return(
@@ -43,7 +35,11 @@ export default class Comments extends React.Component{
                     <React.Fragment>
                         <Header/>
                         <div className={"header"}>
-                            <a href={$data.url}>{$data.title}</a>
+                            {$data.type == "comment" ?
+                                <div className="comment-description" dangerouslySetInnerHTML={ { __html: $data.text } }></div>
+                                :
+                                <NavLink to={$data.url}>{$data.title}</NavLink>
+                            }
                             <p>{$data.points} points
                                 by {$data.author} {parseInt($data.created_at_i / 86400000)} hour
                                 ago | <span>hide</span>| past | web | favourite | {$data.children.length ? $data.children.length:0} comments
@@ -60,19 +56,15 @@ export default class Comments extends React.Component{
                                 </ul>
                             </form>
                         </div>
-
-                        <div className={"comments-body"}>
-                            {$data.children.map((item) => {
-                                return this.comment(item);
-                            })}
-                            
-
-                        </div>
-
+                        <Comment {...this.props} data={$data.children}/>
                     </React.Fragment>
             :
-                <div/>
+                <div>
+                    <h3>No Such Page Available Right Now, Check The URL</h3>
+                </div>
         )
     }
 
 }
+
+

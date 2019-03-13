@@ -20,9 +20,9 @@ export default class Header extends React.Component{
                          <li className="right-broder active">
                             <NavLink to={"/"}>new</NavLink>
                         </li>
-                         <li>
-                            <NavLink to={"/comment"}>comments</NavLink>
-                        </li>
+                         {/*<li>*/}
+                            {/*<NavLink to={"/comment"}>comments</NavLink>*/}
+                        {/*</li>*/}
                     </ul>
                 </div>
             </React.Fragment>
