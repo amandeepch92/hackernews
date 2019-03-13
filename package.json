@@ -18,7 +18,7 @@
     "build": "set \"CI=false\" && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "stylelint": "stylelint 'src/*.css'; exit 0",
+    "stylelint": "stylelint '**/*.css'; exit 0",
     "reactlint": "eslint '**/*.jsx'; exit 0",
     "eslint": "eslint 'src/*.js'; exit 0",
     "validate": "npm-run-all --parallel stylelint eslint",
