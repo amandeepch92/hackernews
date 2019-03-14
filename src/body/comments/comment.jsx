@@ -4,13 +4,11 @@ import {NavLink} from "react-router-dom";
 import "./comment.css";
 
  class Comment extends Component {
-    constructor(props){
-        super(props)
-    }
+    
 
 
     render() {
-        let that = this;
+        
         const { data } = this.props;
 
         return (

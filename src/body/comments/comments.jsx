@@ -15,7 +15,7 @@ export default class Comments extends React.Component{
     componentDidMount() {
         var that = this;
         let paramid = this.props.match.params.id;
-        let url = paramid ? "http://hn.algolia.com/api/v1/items/"+paramid:"";
+        //let url = paramid ? "http://hn.algolia.com/api/v1/items/"+paramid:"";
         if(paramid) {
 
             fetch("http://hn.algolia.com/api/v1/items/"+paramid)
@@ -35,7 +35,7 @@ export default class Comments extends React.Component{
                     <React.Fragment>
                         <Header/>
                         <div className={"header"}>
-                            {$data.type == "comment" ?
+                            {$data.type === "comment" ?
                                 <div className="comment-description" dangerouslySetInnerHTML={ { __html: $data.text } }></div>
                                 :
                                 <NavLink to={$data.url}>{$data.title}</NavLink>
@@ -60,7 +60,7 @@ export default class Comments extends React.Component{
                     </React.Fragment>
             :
                 <div>
-                    <h3>No Such Page Available Right Now, Check The URL</h3>
+                    <h3>Loading...</h3>
                 </div>
         )
     }

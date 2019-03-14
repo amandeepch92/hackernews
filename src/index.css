@@ -67,3 +67,7 @@ a {
 .main-body div:nth-of-type(even) {
 	background-color: #e6e6e4; 
 }
+
+.hand{
+	cursor: pointer;
+}

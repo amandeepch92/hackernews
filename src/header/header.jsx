@@ -17,7 +17,7 @@ export default class Header extends React.Component{
                             </NavLink>
                         </li>
                         
-                         <li className="right-broder active">
+                         <li className="active">
                             <NavLink to={"/"}>new</NavLink>
                         </li>
                          {/*<li>*/}

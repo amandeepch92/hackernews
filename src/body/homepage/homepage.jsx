@@ -20,8 +20,35 @@ export default class Homepage extends React.Component{
                 that.setState({
                     alldata:res,
                     isLoaded:true
-                })
+                });
+
             })
+
+    }
+
+    updateData(data){
+        let that = this;
+        let upvoteSessionData = that.getData();
+        let news = data.hits;
+        if(upvoteSessionData !== null){
+            for(let i=0;i<news.length;i++){
+                news[i]["upvoteCount"] = upvoteSessionData[news[i]["objectID"]] === null ? 0 : upvoteSessionData[news[i]["objectID"]];
+            }
+        }
+
+        
+
+    }
+
+    getData(){
+        let upvoteSessionData = sessionStorage.getItem("upvote");
+        if(upvoteSessionData !== null){
+            upvoteSessionData = JSON.parse(upvoteSessionData);
+        }
+        return upvoteSessionData;
+    }
+
+    storeData(){
 
     }
 
@@ -53,7 +80,7 @@ export default class Homepage extends React.Component{
     }
 
     render(){
-        let itemindex = this.state.showingPageNumber === 0 ? this.state.showingPageNumber:this.state.showingPageNumber+10;
+        let itemindex = this.state.showingPageNumber === 0 ? this.state.showingPageNumber : this.state.showingPageNumber+10;
         return(
             this.state.isLoaded ?
                     <React.Fragment>
@@ -65,14 +92,14 @@ export default class Homepage extends React.Component{
                                                 <span>
                                                     {itemindex +index+ 1}.
                                                 </span>
-                                                <span id="id_upvote">1</span>
-                                                <span onClick={this.upvote.bind(this)}>upvote</span>
+                                                <span className="hand" id="id_upvote">1</span>
+                                                <span className="hand" onClick={this.upvote.bind(this)}>upvote</span>
                                                 <a href={item.url}>{item.title}</a>
                                             </span>
                                         </div>
                                         <p>{item.points} points
                                             by {item.author} {parseInt(item.created_at_i / 86400000)} hour
-                                            ago | <span onClick={this.hideStory.bind(this)}>hide</span>| <NavLink to={"/"+item.objectID}>{item.num_comments ? item.num_comments:0} comments</NavLink></p>
+                                            ago | <span className="hand" onClick={this.hideStory.bind(this)}>hide</span>| <NavLink to={"/"+item.objectID}>{item.num_comments ? item.num_comments:0} comments</NavLink></p>
                                     </div>)
                                 })
                                 }
