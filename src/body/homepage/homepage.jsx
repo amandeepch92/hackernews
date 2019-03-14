@@ -17,10 +17,7 @@ export default class Homepage extends React.Component{
         fetch("http://hn.algolia.com/api/v1/search?tags=front_page")
             .then((res) => res.json())
             .then((res) => {
-                that.setState({
-                    alldata:res,
-                    isLoaded:true
-                });
+                that.updateData(res)
 
             })
 
@@ -35,7 +32,10 @@ export default class Homepage extends React.Component{
                 news[i]["upvoteCount"] = upvoteSessionData[news[i]["objectID"]] === null ? 0 : upvoteSessionData[news[i]["objectID"]];
             }
         }
-
+        that.setState({
+            alldata:news,
+            isLoaded:true
+        });
         
 
     }
@@ -48,8 +48,37 @@ export default class Homepage extends React.Component{
         return upvoteSessionData;
     }
 
-    storeData(){
+    storeData(id){
+        //let upvoteDataArray = [];
+        let checkSessionData = sessionStorage.getItem("upvote");
+        if(checkSessionData ==null){
+            let upvoteDataArray=[];
+            let upvotedata = {
+                "objectID": id,
+                "upvoteCount": 1
+            };
+            upvoteDataArray.push(upvotedata);
+            upvotedata = JSON.stringify(upvoteDataArray);
+            sessionStorage.setItem("upvote",upvotedata);
+            return;
 
+        }
+        else {
+            let upvoteDataArray = [...JSON.parse(checkSessionData)];
+            let upvotedata = {
+                "objectID": id,
+                "upvoteCount": 1
+            };
+            for(let item =0 ;item < upvoteDataArray.length ; item++){
+                if (upvoteDataArray[item]["objectID"] == id) {
+                    upvoteDataArray[item]["upvoteCount"] = Number(upvoteDataArray[item]["upvoteCount"]) + 1;
+                    return;
+                }
+            }
+            upvoteDataArray.push(upvotedata);
+            upvotedata = JSON.stringify(upvoteDataArray);
+            sessionStorage.setItem("upvote",upvotedata);
+        }
     }
 
     pagination(){
@@ -60,17 +89,14 @@ export default class Homepage extends React.Component{
             .then((res) => res.json())
             .then((res) => {
                 if(res) {
-                    that.setState({
-                        alldata: res,
-                        isLoaded: true,
-                        pageIndex: currentPageNumber,
-                        showingPageNumber: res.page
-                    })
+                    that.updateData(res)
                 }
             })
     }
 
-    upvote(e){
+    upvote(id,e){
+        //console.log(id)
+        this.storeData(id);
         let previousValue  = window.$(e.target.previousSibling).text()
         window.$(e.target.previousSibling).text(Number(previousValue) + 1)
     }
@@ -85,15 +111,15 @@ export default class Homepage extends React.Component{
             this.state.isLoaded ?
                     <React.Fragment>
                         <div className="main-body">
-                                {this.state.alldata.hits.map((item, index) => {
+                                {this.state.alldata.map((item, index) => {
                                     return (<div key={"news_list_" + index} id={"id_news"}>
                                         <div>
                                             <span className="text">
                                                 <span>
                                                     {itemindex +index+ 1}.
                                                 </span>
-                                                <span className="hand" id="id_upvote">1</span>
-                                                <span className="hand" onClick={this.upvote.bind(this)}>upvote</span>
+                                                <span className="hand" id="id_upvote">{item["upvoteCount"]}</span>
+                                                <span className="hand" onClick={this.upvote.bind(this,item.objectID)}>upvote</span>
                                                 <a href={item.url}>{item.title}</a>
                                             </span>
                                         </div>
