@@ -29,7 +29,13 @@ export default class Homepage extends React.Component{
         let news = data.hits;
         if(upvoteSessionData !== null){
             for(let i=0;i<news.length;i++){
-                news[i]["upvoteCount"] = upvoteSessionData[news[i]["objectID"]] === null ? 0 : upvoteSessionData[news[i]["objectID"]];
+                for(let j = 0 ; j<upvoteSessionData.length;j++){
+                    if(news[i]["objectID"] == upvoteSessionData[j]["objectID"]){
+                        news[i]["upvoteCount"] = upvoteSessionData[j]["upvoteCount"];
+                        break;
+                    }
+                }
+                //news[i]["upvoteCount"] = !upvoteSessionData[news[i]["objectID"]] ? 0 : upvoteSessionData[news[i]["upvoteCount"]];
             }
         }
         that.setState({
@@ -61,7 +67,6 @@ export default class Homepage extends React.Component{
             upvotedata = JSON.stringify(upvoteDataArray);
             sessionStorage.setItem("upvote",upvotedata);
             return;
-
         }
         else {
             let upvoteDataArray = [...JSON.parse(checkSessionData)];
@@ -72,6 +77,7 @@ export default class Homepage extends React.Component{
             for(let item =0 ;item < upvoteDataArray.length ; item++){
                 if (upvoteDataArray[item]["objectID"] == id) {
                     upvoteDataArray[item]["upvoteCount"] = Number(upvoteDataArray[item]["upvoteCount"]) + 1;
+                    sessionStorage.setItem("upvote",JSON.stringify(upvoteDataArray));
                     return;
                 }
             }
@@ -118,7 +124,7 @@ export default class Homepage extends React.Component{
                                                 <span>
                                                     {itemindex +index+ 1}.
                                                 </span>
-                                                <span className="hand" id="id_upvote">{item["upvoteCount"]}</span>
+                                                <span className="hand" id="id_upvote">{item.upvoteCount}</span>
                                                 <span className="hand" onClick={this.upvote.bind(this,item.objectID)}>upvote</span>
                                                 <a href={item.url}>{item.title}</a>
                                             </span>
