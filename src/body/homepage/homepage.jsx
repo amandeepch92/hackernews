@@ -29,13 +29,8 @@ export default class Homepage extends React.Component{
         let news = data.hits;
         if(upvoteSessionData !== null){
             for(let i=0;i<news.length;i++){
-                for(let j = 0 ; j<upvoteSessionData.length;j++){
-                    if(news[i]["objectID"] == upvoteSessionData[j]["objectID"]){
-                        news[i]["upvoteCount"] = upvoteSessionData[j]["upvoteCount"];
-                        break;
-                    }
-                }
-                //news[i]["upvoteCount"] = !upvoteSessionData[news[i]["objectID"]] ? 0 : upvoteSessionData[news[i]["upvoteCount"]];
+                news[i]["upvoteCount"] = !upvoteSessionData[news[i]["objectID"]] ? "" : upvoteSessionData[news[i]["objectID"]]["upvoteCount"];
+                news[i]["hide"] = !upvoteSessionData[news[i]["objectID"]] ? "" : upvoteSessionData[news[i]["objectID"]]["hide"];
             }
         }
         that.setState({
@@ -54,36 +49,43 @@ export default class Homepage extends React.Component{
         return upvoteSessionData;
     }
 
-    storeData(id){
-        //let upvoteDataArray = [];
+    storeData(id,type){
+        let upvotedata = {};
         let checkSessionData = sessionStorage.getItem("upvote");
         if(checkSessionData ==null){
-            let upvoteDataArray=[];
-            let upvotedata = {
-                "objectID": id,
-                "upvoteCount": 1
-            };
-            upvoteDataArray.push(upvotedata);
-            upvotedata = JSON.stringify(upvoteDataArray);
-            sessionStorage.setItem("upvote",upvotedata);
+
+
+            let upvote = {}
+            if(type=="hide"){
+                upvotedata["hide"] = true;
+            }else{
+                upvotedata["upvoteCount"] = 1;
+            }
+            upvote[id] = upvotedata;
+            let upvoteData = JSON.stringify(upvote);
+            sessionStorage.setItem("upvote",upvoteData);
             return;
         }
         else {
-            let upvoteDataArray = [...JSON.parse(checkSessionData)];
-            let upvotedata = {
-                "objectID": id,
-                "upvoteCount": 1
-            };
-            for(let item =0 ;item < upvoteDataArray.length ; item++){
-                if (upvoteDataArray[item]["objectID"] == id) {
-                    upvoteDataArray[item]["upvoteCount"] = Number(upvoteDataArray[item]["upvoteCount"]) + 1;
-                    sessionStorage.setItem("upvote",JSON.stringify(upvoteDataArray));
-                    return;
+            let parseData = JSON.parse(checkSessionData);
+            if(parseData[id]){
+                if(type=="hide"){
+                    parseData[id]["hide"] = true;
+                }else {
+                    parseData[id]["upvoteCount"] = Number(parseData[id]["upvoteCount"]) + 1;
                 }
+            }else{
+                if(type=="hide"){
+                    upvotedata["hide"] = true;
+                }else{
+                    upvotedata["upvoteCount"] = 1;
+                }
+
+                parseData[id]=upvotedata;
             }
-            upvoteDataArray.push(upvotedata);
-            upvotedata = JSON.stringify(upvoteDataArray);
-            sessionStorage.setItem("upvote",upvotedata);
+
+            let upvoteData  = JSON.stringify(parseData);
+            sessionStorage.setItem("upvote",upvoteData);
         }
     }
 
@@ -107,7 +109,9 @@ export default class Homepage extends React.Component{
         window.$(e.target.previousSibling).text(Number(previousValue) + 1)
     }
 
-    hideStory(e){
+    hideStory(id,e){
+        this.storeData(id,"hide");
+
         window.$(e.target).closest("#id_news").hide()
     }
 
@@ -118,8 +122,11 @@ export default class Homepage extends React.Component{
                     <React.Fragment>
                         <div className="main-body">
                                 {this.state.alldata.map((item, index) => {
-                                    return (<div key={"news_list_" + index} id={"id_news"}>
-                                        <div>
+                                    return (
+                                        item.hide?<div></div>
+                                    :
+                                        <div key={"news_list_" + index} id={"id_news"}>
+                                            <div>
                                             <span className="text">
                                                 <span>
                                                     {itemindex +index+ 1}.
@@ -128,11 +135,11 @@ export default class Homepage extends React.Component{
                                                 <span className="hand" onClick={this.upvote.bind(this,item.objectID)}>upvote</span>
                                                 <a href={item.url}>{item.title}</a>
                                             </span>
-                                        </div>
-                                        <p>{item.points} points
-                                            by {item.author} {parseInt(item.created_at_i / 86400000)} hour
-                                            ago | <span className="hand" onClick={this.hideStory.bind(this)}>hide</span>| <NavLink to={"/"+item.objectID}>{item.num_comments ? item.num_comments:0} comments</NavLink></p>
-                                    </div>)
+                                            </div>
+                                            <p>{item.points} points
+                                                by {item.author} {parseInt(item.created_at_i / 86400000)} hour
+                                                ago | <span className="hand" onClick={this.hideStory.bind(this,item.objectID)}>hide</span>| <NavLink to={"/"+item.objectID}>{item.num_comments ? item.num_comments:0} comments</NavLink></p>
+                                        </div>)
                                 })
                                 }
 
