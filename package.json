@@ -4,22 +4,23 @@
   "private": true,
   "homepage": "https://github.com/amandeepch92/hackernews/",
   "dependencies": {
+    "eslint": "5.12.0",
+    "eslint-plugin-react": "^7.12.4",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.8",
     "stylelint": "^9.10.1",
     "stylelint-config-standard": "^18.2.0",
-    "stylelint-scss": "^3.5.3",
-    "eslint-plugin-react": "^7.12.4",
-    "eslint": "5.12.0"
+    "stylelint-scss": "^3.5.3"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "set \"CI=false\" && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "stylelint": "stylelint 'src/*.css'; exit 0",
-    "reactlint": "eslint 'src/*.jsx'; exit 0",
+    "stylelint": "stylelint '**/*.css'; exit 0",
+    "reactlint": "eslint '**/*.jsx'; exit 0",
     "eslint": "eslint 'src/*.js'; exit 0",
     "validate": "npm-run-all --parallel stylelint eslint",
     "precommit": "npm run validate",
