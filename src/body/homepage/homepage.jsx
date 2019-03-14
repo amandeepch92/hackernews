@@ -23,7 +23,7 @@ export default class Homepage extends React.Component{
 
     }
 
-    updateData(data){
+    updateData(data,type){
         let that = this;
         let upvoteSessionData = that.getData();
         let news = data.hits;
@@ -35,7 +35,8 @@ export default class Homepage extends React.Component{
         }
         that.setState({
             alldata:news,
-            isLoaded:true
+            isLoaded:true,
+            pageIndex:type=="updatePage"?that.state.pageIndex+1:that.state.pageIndex
         });
         
 
@@ -97,7 +98,7 @@ export default class Homepage extends React.Component{
             .then((res) => res.json())
             .then((res) => {
                 if(res) {
-                    that.updateData(res)
+                    that.updateData(res,"updatePage")
                 }
             })
     }
