@@ -36,7 +36,7 @@ export default class Homepage extends React.Component{
         that.setState({
             alldata:news,
             isLoaded:true,
-            pageIndex:type=="updatePage"?that.state.pageIndex+1:that.state.pageIndex
+            pageIndex:type === "updatePage"?that.state.pageIndex+1:that.state.pageIndex
         });
         
 
@@ -57,7 +57,7 @@ export default class Homepage extends React.Component{
 
 
             let upvote = {}
-            if(type=="hide"){
+            if(type === "hide"){
                 upvotedata["hide"] = true;
             }else{
                 upvotedata["upvoteCount"] = 1;
@@ -70,13 +70,13 @@ export default class Homepage extends React.Component{
         else {
             let parseData = JSON.parse(checkSessionData);
             if(parseData[id]){
-                if(type=="hide"){
+                if(type === "hide"){
                     parseData[id]["hide"] = true;
                 }else {
                     parseData[id]["upvoteCount"] = Number(parseData[id]["upvoteCount"]) + 1;
                 }
             }else{
-                if(type=="hide"){
+                if(type === "hide"){
                     upvotedata["hide"] = true;
                 }else{
                     upvotedata["upvoteCount"] = 1;
