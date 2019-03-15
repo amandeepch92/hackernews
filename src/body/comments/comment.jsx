@@ -23,7 +23,13 @@ import "./comment.css";
                             <div className="comment-description" dangerouslySetInnerHTML={ { __html: item.text } }></div>
                             <p className="reply"><span>reply</span></p>
                         </div>
-                        {item.children && <Comment data={item.children}/>}
+                        {item.children.length ? 
+                            <div className="innerComment">
+                                <Comment data={item.children}/>
+                            </div>
+                            :
+                            ""
+                        }         
                     </div>
                 )}
             </div>
