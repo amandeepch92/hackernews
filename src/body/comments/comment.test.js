@@ -3,7 +3,7 @@ import Enzyme,{shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import Comments from "./comments";
 
-Enzyme.configure({ adapter: new Adapter() })
+
 
 describe("check home page component",() => {
     it("renders homepage with isLoaded false",() => {
@@ -20,7 +20,7 @@ describe("check home page component",() => {
 
     it("check homepage with isLoaded True",()=>{
         const  wrapper = shallow(<Comments match={{"params":{id:""}}}/>)
-         wrapper.setState({isLoaded:true,data:{children:{}}})
+         wrapper.setState({isLoaded:true,data:{children:{},url:"google.com"}})
         expect(wrapper.find("div.header").length).toEqual(1);
     })
 
