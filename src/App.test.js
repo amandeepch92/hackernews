@@ -1,8 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Enzyme,{EnzymeAdapter,shallow,mount,ShallowWrapper} from "enzyme";
+
+import Enzyme,{shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import renderer from 'react-test-renderer';
+
 import Homepage from "./body/homepage/homepage";
 
 Enzyme.configure({ adapter: new Adapter() })
@@ -22,7 +22,7 @@ describe("check home page component",() => {
 
   it("check homepage with isLoaded True",()=>{
     const  wrapper = shallow(<Homepage/>)
-    let isLoaded = wrapper.setState({isLoaded:true,alldata:[]})
+    wrapper.setState({isLoaded:true,alldata:[]})
     expect(wrapper.find("div.main-body").length).toEqual(1);
   })
 
